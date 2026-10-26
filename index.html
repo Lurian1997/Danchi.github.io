@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>潮州丹驰 - 精品鞋履制造 | Chaozhou Danchi</title>
+    <!-- 引入现代无衬线英文字体与思源黑体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入字体图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==================== 1. 核心变量与基础重置 ==================== */
+        :root {
+            --color-bg: #0a0a0a;
+            --color-bg-alt: #141414;
+            --color-text: #f0f0f0;
+            --color-text-muted: #a0a0a0;
+            --color-accent: #00ff88;
+            --font-main: 'Montserrat', 'Noto Sans SC', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; overflow-x: hidden; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        section { padding: 120px 0; }
+
+        /* ==================== 2. 顶部导航栏 ==================== */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--color-accent);
+        }
+
+        .nav-right { display: flex; align-items: center; gap: 40px; }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-size: 0.9rem; position: relative; }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 0; height: 2px; background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .lang-switcher {
+            display: flex; align-items: center; gap: 8px;
+            cursor: pointer; font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 15px; border-radius: 20px;
+        }
+        .lang-switcher:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+        .menu-toggle { display: none; cursor: pointer; font-size: 1.5rem; }
+
+        /* ==================== 3. 首屏 Hero 区域 ==================== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-bg-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.3; z-index: -2;
+        }
+
+        .hero::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, var(--color-bg) 100%);
+            z-index: -1;
+        }
+
+        .hero-content { z-index: 1; max-width: 800px; }
+        .hero h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px; opacity: 0; transform: translateY(50px); }
+        .hero p { font-size: 1.2rem; color: var(--color-text-muted); margin-bottom: 40px; opacity: 0; transform: translateY(30px); }
+
+        .btn-primary {
+            display: inline-block; padding: 15px 40px;
+            background-color: var(--color-accent); color: var(--color-bg);
+            font-weight: 700; border-radius: 30px; opacity: 0; transform: translateY(30px);
+        }
+        .btn-primary:hover { transform: scale(1.05); }
+
+        .floating-shoe {
+            position: absolute; right: 10%; top: 50%; transform: translateY(-50%) rotate(-15deg);
+            width: 40vw; z-index: 0; opacity: 0.8;
+        }
+
+        /* ==================== 4. 板块通用样式 ==================== */
+        .section-header { margin-bottom: 60px; }
+        .section-tag { color: var(--color-accent); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 10px; }
+        .section-title { font-size: 2.5rem; }
+
+        /* ==================== 5. 关于我们 (About) ==================== */
+        .about { background-color: var(--color-bg); }
+        .about-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+        }
+        .about-text p { color: var(--color-text-muted); margin-bottom: 20px; }
+        .about-stats { display: flex; gap: 40px; margin-top: 30px; }
+        .stat-item h3 { font-size: 2.5rem; color: var(--color-accent); }
+        .stat-item p { font-size: 0.9rem; color: var(--color-text-muted); }
+
+        /* ==================== 6. 产品展示 (Products) ==================== */
+        .products { background-color: var(--color-bg-alt); }
+        .product-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+        }
+        .product-card {
+            background: var(--color-bg); border-radius: 15px; overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover { transform: translateY(-10px); }
+        .product-img { height: 250px; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden;}
+        .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;}
+        .product-card:hover .product-img img { transform: scale(1.05); }
+        .product-info { padding: 25px; }
+        .product-info h3 { font-size: 1.2rem; margin-bottom: 10px; }
+        .product-info p { font-size: 0.9rem; color: var(--color-text-muted); }
+
+        /* ==================== 7. 联系我们 (Contact) ==================== */
+        .contact-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+        }
+        .contact-info-item { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+        .contact-info-item i { color: var(--color-accent); font-size: 1.5rem; width: 30px; }
+        
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 15px; margin-bottom: 20px;
+            background: var(--color-bg-alt); border: 1px solid #333;
+            color: #fff; border-radius: 8px; font-family: inherit;
+        }
+        .contact-form button {
+            background: var(--color-accent); color: var(--color-bg);
+            border: none; padding: 15px 40px; border-radius: 30px;
+            font-weight: 700; cursor: pointer; font-size: 1rem;
+        }
+
+        /* ==================== 8. 底部 (Footer) ==================== */
+        footer {
+            background: #000; padding: 60px 0 30px; border-top: 1px solid #222;
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px;
+        }
+        .footer-logo { font-size: 1.5rem; font-weight: 700; color: var(--color-accent); margin-bottom: 20px; }
+        .footer-desc { color: var(--color-text-muted); font-size: 0.9rem; max-width: 300px; }
+        .footer-col h4 { font-size: 1.1rem; margin-bottom: 20px; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: var(--color-text-muted); font-size: 0.9rem; }
+        .footer-col ul li a:hover { color: var(--color-accent); }
+        
+        .footer-bottom {
+            border-top: 1px solid #222; padding-top: 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.8rem; color: var(--color-text-muted);
+        }
+        .social-links { display: flex; gap: 15px; }
+        .social-links a { color: var(--color-text-muted); font-size: 1.2rem; }
+        .social-links a:hover { color: var(--color-accent); }
+
+        /* ==================== 9. 响应式适配 ==================== */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 3.5rem; }
+            .about-grid, .contact-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .hero { padding: 0 5%; padding-top: 80px; }
+            .hero h1 { font-size: 2.5rem; }
+            .floating-shoe { width: 80vw; opacity: 0.1; right: -10%; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航栏 -->
+    <header>
+        <div class="container nav-inner">
+            <div class="logo">潮州丹驰</div>
+            <div class="nav-right">
+                <nav class="nav-links">
+                    <a href="#hero" data-i18n="home">首页</a>
+                    <a href="#about" data-i18n="about">关于我们</a>
+                    <a href="#products" data-i18n="products">产品中心</a>
+                    <a href="#contact" data-i18n="contact">联系我们</a>
+                </nav>
+                <div class="lang-switcher" onclick="toggleLanguage()">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="current-lang">EN</span>
+                </div>
+                <div class="menu-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 首屏动态区域 -->
+    <section id="hero" class="hero">
+        <!-- 视频背景占位符 (为了演示使用了鞋子相关视频) -->
+        <video class="hero-bg-video" autoplay muted loop playsinline poster="https://kkimgs.yisou.com/ims?kt=url&at=ori&key=aHR0cDovL2ltZ3NlcnZpY2Uuc3VuaW5nLmNuL3VpbWcxL2IyYy9pbWFnZS9jQVl4MzNpSkd0elZLbkFUeVBlNnZ3LmpwZw==&sign=yx:bBzZN1jUiIkA98FFKK_fefVMZ8o=&tv=0_0">
+            <source src="https://player.vimeo.com/external/371836194.sd.mp4?s=1219528d68821a3f486205333071a36322f1d420&profile_id=164&oauth2_token_id=57447761" type="video/mp4">
+        </video>
+        
+        <div class="container hero-content">
+            <h1 data-i18n="hero_title">走向世界的<br>潮州丹驰鞋履制造</h1>
+            <p data-i18n="hero_subtitle">深耕拖鞋与女式凉鞋 20年 | 畅销欧美、非洲、日本 | 专业 OEM/ODM</p>
+            <a href="#contact" class="btn-primary" data-i18n="get_quote">获取报价</a>
+        </div>
+
+        <!-- 悬浮鞋图 (替换为凉鞋/拖鞋相关图片) -->
+        <img src="https://kkimgs.yisou.com/ims?kt=url&at=ori&key=aHR0cDovL2ltZ3NlcnZpY2Uuc3VuaW5nLmNuL3VpbWcxL2IyYy9pbWFnZS9LTHhORzB4QmU5NlI2UlQydXYzTFFnLmpwZw==&sign=yx:QiSjvUPLJ-AYiG6wruHfDTC9GeU=&tv=0_0" alt="Floating Shoe" class="floating-shoe">
+    </section>
+
+    <!-- 关于我们板块 -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=1000&auto=format&fit=crop" alt="Factory Interior">
+                </div>
+                <div class="about-text">
+                    <div class="section-tag" data-i18n="about_tag">关于潮州丹驰</div>
+                    <h2 class="section-title" data-i18n="about_title">连接创意与现实的制造商</h2>
+                    <p data-i18n="about_desc1">潮州丹驰成立于2006年，致力于为全球提供顶级的拖鞋与女式凉鞋制造服务。我们拥有超过5000平方米的现代化生产基地，产品远销欧美、非洲及日本等国家和地区。</p>
+                    <p data-i18n="about_desc2">从设计、打样到批量生产，我们严格遵循国际标准，确保每一双鞋都完美无瑕。</p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <h3>20+</h3>
+                            <p data-i18n="stat_years">年行业经验</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>30+</h3>
+                            <p data-i18n="stat_countries">出口国家</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品展示板块 -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag" data-i18n="products_tag">我们的专长</div>
+                <h2 class="section-title" data-i18n="products_title">产品系列</h2>
+            </div>
+            
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <!-- 替换图片 -->
+                        <img src="https://kkimgs.yisou.com/ims?kt=url&at=ori&key=aHR0cDovL2ltZ3NlcnZpY2Uuc3VuaW5nLmNuL3VpbWcxL2IyYy9pbWFnZS85RkpMaWttbnowMkRQdEg1RkgyNmtRLmpwZw==&sign=yx:orIMsk-9FB-GoIqxyTQYEQ48E5g=&tv=0_0" alt="拖鞋">
+                    </div>
+                    <div class="product-info">
+                        <h3 data-i18n="prod_1_title">精品拖鞋系列</h3>
+                        <p data-i18n="prod_1_desc">专为家居与休闲设计的轻量化鞋履，采用环保材料与人体工学设计，舒适耐穿。</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <!-- 替换图片 -->
+                        <img src="https://kkimgs.yisou.com/ims?kt=url&at=ori&key=aHR0cDovL3NjMDQuYWxpY2RuLmNvbS9rZi9IMThhMjJlYzE1MWZjNDE5MGI1ZmM0NDRmMzA2M2IzMzZsLzI0NDA2ODAyMC9IMThhMjJlYzE1MWZjNDE5MGI1ZmM0NDRmMzA2M2IzMzZsLmpwZw==&sign=yx:2-IH6iqC2rsJJu2mUlxJ6hvLoME=&tv=0_0" alt="女式凉鞋">
+                    </div>
+                    <div class="product-info">
+                        <h3 data-i18n="prod_2_title">女式时尚凉鞋</h3>
+                        <p data-i18n="prod_2_desc">紧跟欧美与日本时尚潮流，融合精湛工艺与现代设计美学，款式多样。</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <!-- 替换图片 -->
+                        <img src="https://kkimgs.yisou.com/ims?kt=url&at=ori&key=aHR0cDovL2Nkbi5yZW5yZW50cmFjay5jb20vMTAzMy9SZXNvdXJjZXMvZ29vZHMvNWU1YjU5ZDFjMjk2ZTE1ODMwNDUwNzMuanBnP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLG1fZmlsbCx3XzgwMA==&sign=yx:iPxu0SA1JrXiYwW-tEWih4OV07g=&tv=0_0" alt="定制款拖鞋">
+                    </div>
+                    <div class="product-info">
+                        <h3 data-i18n="prod_3_title">出口定制系列</h3>
+                        <p data-i18n="prod_3_desc">满足不同市场需求的定制化鞋款，特别针对非洲及欧美市场的耐磨、防滑设计。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们板块 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="section-tag" data-i18n="contact_tag">开始合作</div>
+                    <h2 class="section-title" data-i18n="contact_title">联系我们</h2>
+                    <p data-i18n="contact_desc" style="color: var(--color-text-muted); margin-bottom: 40px;">请填写右侧表单，我们的专业团队将在24小时内与您取得联系。</p>
+                    
+                    <div class="contact-info-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+86 135-0010-1122</span>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>sales@chaozhoudanchi.com</span>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>广东省潮州市湘桥区凤东路丹驰鞋业有限公司</span>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form>
+                        <input type="text" data-i18n-placeholder="form_name" placeholder="您的姓名 / 公司名称">
+                        <input type="email" data-i18n-placeholder="form_email" placeholder="电子邮箱">
+                        <textarea rows="5" data-i18n-placeholder="form_msg" placeholder="请简述您的需求..."></textarea>
+                        <button type="button" data-i18n="form_submit">发送询盘</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部版权信息 -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">潮州丹驰</div>
+                    <p class="footer-desc" data-i18n="footer_desc">专注拖鞋与女式凉鞋制造，产品远销欧美、非洲、日本。您的专业全球鞋履制造合作伙伴。</p>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_nav">导航</h4>
+                    <ul>
+                        <li><a href="#hero" data-i18n="home">首页</a></li>
+                        <li><a href="#about" data-i18n="about">关于我们</a></li>
+                        <li><a href="#products" data-i18n="products">产品中心</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_service">服务</h4>
+                    <ul>
+                        <li><a href="#" data-i18n="footer_oem">OEM 代工</a></li>
+                        <li><a href="#" data-i18n="footer_odm">ODM 设计</a></li>
+                        <li><a href="#" data-i18n="footer_sample">快速打样</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_legal">法律</h4>
+                    <ul>
+                        <li><a href="#" data-i18n="footer_privacy">隐私政策</a></li>
+                        <li><a href="#" data-i18n="footer_terms">服务条款</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="copyright">&copy; 2026 潮州丹驰鞋业有限公司. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入第三方库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <script>
+        // ==================== 1. 语言切换系统 ====================
+        const translations = {
+            en: {
+                home: "Home", about: "About Us", products: "Products", contact: "Contact",
+                hero_title: "Stepping into the Future of DANCHI Footwear",
+                hero_subtitle: "20 Years in Slippers & Women's Sandals | Exporting to EU, US, Africa, Japan | OEM/ODM",
+                get_quote: "GET A QUOTE",
+                about_tag: "ABOUT DANCHI", about_title: "Bridging Ideas to Reality",
+                about_desc1: "Founded in 2006, Chaozhou Danchi is dedicated to providing top-tier slipper and women's sandal manufacturing for global brands. We operate a modern production base spanning over 5,000 square meters, exporting to Europe, America, Africa, and Japan.",
+                about_desc2: "From design and prototyping to mass production, we adhere to strict international standards ensuring every pair is flawless.",
+                stat_years: "Years of Experience", stat_countries: "Export Countries",
+                products_tag: "OUR EXPERTISE", products_title: "Product Series",
+                prod_1_title: "Premium Slippers", prod_1_desc: "Lightweight footwear designed for home and leisure, using eco-friendly materials and ergonomic design for comfort and durability.",
+                prod_2_title: "Fashion Women's Sandals", prod_2_desc: "Following fashion trends in Europe, US, and Japan, blending exquisite craftsmanship with modern aesthetics.",
+                prod_3_title: "Custom Export Series", prod_3_desc: "Customized footwear tailored to different market needs, featuring durable and anti-slip designs for African and Western markets.",
+                contact_tag: "START COOPERATION", contact_title: "Contact Us",
+                contact_desc: "Please fill out the form and our professional team will get in touch within 24 hours.",
+                form_name: "Your Name / Company", form_email: "Email Address", form_msg: "Briefly describe your requirements...", form_submit: "Send Inquiry",
+                footer_desc: "Specializing in slippers and women's sandals, exporting to Europe, US, Africa, and Japan. Your professional global footwear manufacturing partner.",
+                footer_nav: "Navigation", footer_service: "Services", footer_legal: "Legal",
+                footer_oem: "OEM Manufacturing", footer_odm: "ODM Design", footer_sample: "Rapid Prototyping",
+                footer_privacy: "Privacy Policy", footer_terms: "Terms of Service",
+                copyright: "&copy; 2026 Chaozhou Danchi Footwear Co., Ltd. All rights reserved."
+            },
+            zh: {
+                home: "首页", about: "关于我们", products: "产品中心", contact: "联系我们",
+                hero_title: "走向世界的<br>潮州丹驰鞋履制造",
+                hero_subtitle: "深耕拖鞋与女式凉鞋 20年 | 畅销欧美、非洲、日本 | 专业 OEM/ODM",
+                get_quote: "获取报价",
+                about_tag: "关于潮州丹驰", about_title: "连接创意与现实的制造商",
+                about_desc1: "潮州丹驰成立于2006年，致力于为全球提供顶级的拖鞋与女式凉鞋制造服务。我们拥有超过5000平方米的现代化生产基地，产品远销欧美、非洲及日本等国家和地区。",
+                about_desc2: "从设计、打样到批量生产，我们严格遵循国际标准，确保每一双鞋都完美无瑕。",
+                stat_years: "年行业经验", stat_countries: "出口国家",
+                products_tag: "我们的专长", products_title: "产品系列",
+                prod_1_title: "精品拖鞋系列", prod_1_desc: "专为家居与休闲设计的轻量化鞋履，采用环保材料与人体工学设计，舒适耐穿。",
+                prod_2_title: "女式时尚凉鞋", prod_2_desc: "紧跟欧美与日本时尚潮流，融合精湛工艺与现代设计美学，款式多样。",
+                prod_3_title: "出口定制系列", prod_3_desc: "满足不同市场需求的定制化鞋款，特别针对非洲及欧美市场的耐磨、防滑设计。",
+                contact_tag: "开始合作", contact_title: "联系我们",
+                contact_desc: "请填写右侧表单，我们的专业团队将在24小时内与您取得联系。",
+                form_name: "您的姓名 / 公司名称", form_email: "电子邮箱", form_msg: "请简述您的需求...", form_submit: "发送询盘",
+                footer_desc: "专注拖鞋与女式凉鞋制造，产品远销欧美、非洲、日本。您的专业全球鞋履制造合作伙伴。",
+                footer_nav: "导航", footer_service: "服务", footer_legal: "法律",
+                footer_oem: "OEM 代工", footer_odm: "ODM 设计", footer_sample: "快速打样",
+                footer_privacy: "隐私政策", footer_terms: "服务条款",
+                copyright: "&copy; 2026 潮州丹驰鞋业有限公司. 版权所有."
+            }
+        };
+
+        let currentLang = 'zh';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            
+            // 更新语言按钮显示
+            document.getElementById('current-lang').innerText = currentLang.toUpperCase();
+            
+            // 更新页面所有文本
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    element.innerHTML = translations[currentLang][key];
+                }
+            });
+
+            // 更新 placeholder
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translations[currentLang][key]) {
+                    element.placeholder = translations[currentLang][key];
+                }
+            });
+        }
+
+        // ==================== 2. 平滑滚动 (Lenis) 初始化 ====================
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 导航栏点击平滑跳转
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    lenis.scrollTo(targetElement);
+                }
+            });
+        });
+
+        // 监听滚动，改变导航栏背景
+        lenis.on('scroll', (e) => {
+            const header = document.querySelector('header');
+            if (e.scroll > 50) {
+                header.style.padding = '15px 0';
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
+
+        // ==================== 3. GSAP 进场动画 ====================
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 首屏动画
+        const tl = gsap.timeline();
+        tl.to('.hero h1', { y: 0, opacity: 1, duration: 1, ease: "power3.out" })
+          .to('.hero p', { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
+          .to('.hero .btn-primary', { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
+          .from('.floating-shoe', { x: 100, opacity: 0, rotation: 0, duration: 1.5, ease: "power2.out" }, "-=1.2");
+
+        // 悬浮鞋子持续微动效
+        gsap.to('.floating-shoe', {
+            y: "-=20", rotation: "-=5", duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut"
+        });
+
+        // 其他板块滚动动画
+        gsap.utils.toArray('.about-text, .product-card, .contact-info, .contact-form, .footer-col').forEach((element) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>
